@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management - Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .task-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .task-form input,
+        .task-form select {
+            flex: 1;
+            padding: 10px;
+        }
+        .task-form button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .task-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add new task</h1>
+        <form class="task-form" id="taskForm">
+            <p>Name of the Task</p>
+            <input type="text" id="taskName" placeholder="Task" required>
+            
+            <p>Start Date&nbsp;Deadline</p>
+            <input type="date" id="startDate" required>
+            <input type="date" id="endDate" required>
+            
+            <p>Status</p>
+            <select id="status" required>
+                <option value="Planned">Planned</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Under Review">Under Review</option>
+                <option value="Completed">Completed</option>
+            </select>
+            
+            <button type="button" onclick="handleTaskSubmission()">Add</button>
+        </form>
+    </div>
+
+    <script>
+        function handleTaskSubmission() {
+            const taskNameInput = document.getElementById('taskName');
+            const startDateInput = document.getElementById('startDate');
+            const endDateInput = document.getElementById('endDate');
+            const statusSelect = document.getElementById('status');
+
+            const taskName = taskNameInput.value;
+            const startDate = startDateInput.value;
+            const endDate = endDateInput.value;
+            const status = statusSelect.value;
+
+            const taskDetails = `${taskName} (${startDate} - ${endDate})`;
+
+            const newTaskElement = document.createElement('li');
+            newTaskElement.textContent = taskDetails;
+
+            // Save the task details to localStorage
+            const statusTasks = JSON.parse(localStorage.getItem(status)) || [];
+            statusTasks.push(taskDetails);
+            localStorage.setItem(status, JSON.stringify(statusTasks));
+
+            // Clear the form inputs
+            taskNameInput.value = '';
+            startDateInput.value = '';
+            endDateInput.value = '';
+            statusSelect.value = '';
+        }
+    </script>
+</body>
+</html>

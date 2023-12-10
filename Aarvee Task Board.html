@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management - Board</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            margin: 0; /* Remove default margin */
+        }
+        .board {
+            display: flex;
+            justify-content: space-between;
+            margin: 50px; /* Adjusted margin for better spacing */
+        }
+        .column {
+            width: 25%;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-right: 20px; /* Added margin */
+        }
+        .column h3 {
+            margin-bottom: 20px;
+        }
+        .column ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .column ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .column ul li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="board">
+        <div class="column">
+            <h3>Planned</h3>
+            <ul></ul>
+        </div>
+        <div class="column">
+            <h3>In Progress</h3>
+            <ul></ul>
+        </div>
+        <div class="column">
+            <h3>Under Review</h3>
+            <ul></ul>
+        </div>
+        <div class="column">
+            <h3>Completed</h3>
+            <ul></ul>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve tasks from localStorage and populate columns
+        document.addEventListener('DOMContentLoaded', function () {
+            const columns = document.querySelectorAll('.column');
+
+            columns.forEach(function (column) {
+                const status = column.querySelector('h3').textContent;
+                const statusTasks = JSON.parse(localStorage.getItem(status)) || [];
+
+                const columnList = column.querySelector('ul');
+
+                statusTasks.forEach(function (taskDetails) {
+                    const newTaskElement = document.createElement('li');
+                    newTaskElement.textContent = taskDetails;
+                    columnList.appendChild(newTaskElement);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
